@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Platform | <%= title %></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- include partial(nav) -->
+    <%- include('./partials/nav')  %>
+
+    <div class="container">
+        <section id="home">
+            <h1>Welcome to the Blog</h1>
+            <p>Read and share amazing blogs.</p>
+            <a href="/createBlog" class="button">Create a Blog</a>
+        </section>
+    </div>
+</body>
+</html>
+
+
