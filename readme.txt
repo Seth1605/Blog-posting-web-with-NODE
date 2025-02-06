@@ -1,0 +1,1 @@
+I'm making a small project to learn NodeJS with express and work with EJS file to make a website to post, view blog include a title and a content which is the body of the blog This project is using MongoDB to store it data such as blog information and user information with Mongoose library to support with database logic within the project
