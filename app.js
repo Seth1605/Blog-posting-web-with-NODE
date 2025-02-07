@@ -1,11 +1,16 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const Blog = require('./Models/blog');
 const dbURL = 'mongodb+srv://Seth:<db_password>@learnnode.6ei6e.mongodb.net/?retryWrites=true&w=majority&appName=learnNode';
 const app = express();
 
 //connect to mongodb
-mongoose.connect(dbURL, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(dbURL)
+//incase of older version of node you would need to pass a second argument to the connect method
+//-------------
+//{useNewUrlParser: true, useUnifiedTopology: true}
+//-------------
 .then((result) => 
     app.listen(3000, (err) => {
         if(err){
@@ -32,6 +37,13 @@ app.use(morgan('dev'));
 //     --or--
 //     res.status(200).sendfile(__dirname + '/pages/menu.html');
 // })
+app.get('/cblog', (req, res)=>{
+    const blog = new Blog({
+        title: 'new blog',
+        content: 'new blog content'
+    });
+})
+
 app.get('/', (req, res) => {
     res.status(200).render('index', 
         {title: 'Home'});
