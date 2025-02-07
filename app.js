@@ -1,21 +1,26 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const connectDB = 'mongodb+srv://Seth:<db_password>@learnnode.6ei6e.mongodb.net/?retryWrites=true&w=majority&appName=learnNode';
-
+const dbURL = 'mongodb+srv://Seth:<db_password>@learnnode.6ei6e.mongodb.net/?retryWrites=true&w=majority&appName=learnNode';
 const app = express();
+
+//connect to mongodb
+mongoose.connect(dbURL, {useNewUrlParser: true, useUnifiedTopology: true})
+.then((result) => 
+    app.listen(3000, (err) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log("server is listening for request on port 3000");
+        }
+    }))
+.catch((err) => console.log(err));
 
 //setting render engine
 app.set('view engine', 'ejs');
 //res.render('index', {title: 'Home'}); 
-app.listen(3000, (err) => {
-    if(err){
-        console.log(err);
-    }
-    else{
-        console.log("server is listening for request on port 3000");
-    }
-});
+
 //make "public" folder available
 app.use(express.static('public'));
 app.use(express.static('public/img'))
