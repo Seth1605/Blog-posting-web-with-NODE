@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Blog = require('./Models/blog');
-const dbURL = 'mongodb+srv://Seth:<db_password>@learnnode.6ei6e.mongodb.net/?retryWrites=true&w=majority&appName=learnNode';
+const dbURL = 'mongodb+srv://Seth:123@learnnode.6ei6e.mongodb.net/BlogWeb?retryWrites=true&w=majority&appName=learnNode';
 const app = express();
 
 //connect to mongodb
@@ -42,6 +42,25 @@ app.get('/cblog', (req, res)=>{
         title: 'new blog',
         content: 'new blog content'
     });
+    blog.save();
+})
+app.get('/vblog',(req, res) =>{
+    Blog.find()
+    .then((result) => {
+        res.send(result);
+    })
+    .catch((err) => {
+        res.send(err);
+    });
+});
+app.get('/vblog',(req, res) =>{
+    Blog.findById('67a330fe5473f64dac61617c')
+    .then((result) => {
+        res.send(result);
+    })
+    .catch((err) => {
+        res.send(err);
+    });
 })
 
 app.get('/', (req, res) => {
@@ -63,8 +82,7 @@ app.get('/createBlog', (req, res) => {
     res.status(200).render('createBlog');
 });
 const blogs = [
-   {title:'Text1', content:'This is the content of text1'},
-   {title:'Text2', content:'This is the content of text'},
+
 ]
 const noBlog = 'no blog to show';
 app.get('/viewBlog', (req, res) => {
