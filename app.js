@@ -28,40 +28,9 @@ app.set('view engine', 'ejs');
 
 //make "public" folder available
 app.use(express.static('public'));
-app.use(express.static('public/img'))
+app.use(express.static('public/img'));
 //log dev mode data
 app.use(morgan('dev'));
-//---------------without render engine EJS
-// app.get('/menu', (req, res) => {
-//     res.status(200).sendFile('/pages/menu.html', {root: __dirname})
-//     --or--
-//     res.status(200).sendfile(__dirname + '/pages/menu.html');
-// })
-app.get('/cblog', (req, res)=>{
-    const blog = new Blog({
-        title: 'new blog',
-        content: 'new blog content'
-    });
-    blog.save();
-})
-app.get('/vblog',(req, res) =>{
-    Blog.find()
-    .then((result) => {
-        res.send(result);
-    })
-    .catch((err) => {
-        res.send(err);
-    });
-});
-app.get('/vblog',(req, res) =>{
-    Blog.findById('67a330fe5473f64dac61617c')
-    .then((result) => {
-        res.send(result);
-    })
-    .catch((err) => {
-        res.send(err);
-    });
-})
 
 app.get('/', (req, res) => {
     res.status(200).render('index', 
@@ -81,12 +50,14 @@ app.get('/aboutUs', (req, res) => {
 app.get('/createBlog', (req, res) => {
     res.status(200).render('createBlog');
 });
-const blogs = [
-
-]
-const noBlog = 'no blog to show';
 app.get('/viewBlog', (req, res) => {
-    res.status(200).render('viewBlog', {blogs, noBlog});
+    Blog.find().sort({createdAt: -1})
+    .then((result) => {
+        res.status(200).render('viewBlog', {blogs: result});
+    })
+    .catch((err) => {
+        console.log(err);
+    })
 });
 
 app.use((req,res) => {
