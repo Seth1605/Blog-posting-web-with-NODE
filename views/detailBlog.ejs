@@ -1,0 +1,44 @@
+<%- include('./partials/nav') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="/img/blogWeb_logo_trp.png">
+</head>
+<body>
+    <%- include('./partials/nav')  %>
+
+    <div class="container">
+        <section id="view-blogs">
+            <h1>Blog</h1>
+                <% if (blogs.length > 0) { %>
+                    <% blogs.forEach(blog => { %>
+                        <div class="blog">
+                            <a href="/viewblog/<%= blog._id %>">
+                            <h2><%= blog.title %></h2>
+                            <p id="snippet"><%= blog.content %></p>
+                            </a>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p class="no-blog">No Blog Available</p>
+                <% } %> 
+                     
+        </section>
+    </div>
+
+    <%- include('./partials/footer') %>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<%- include('./partials/footer') %>
