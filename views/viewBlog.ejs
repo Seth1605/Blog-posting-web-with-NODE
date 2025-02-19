@@ -16,8 +16,10 @@
                 <% if (blogs.length > 0) { %>
                     <% blogs.forEach(blog => { %>
                         <div class="blog">
+                            <a href="/viewblog/<%= blog._id %>">
                             <h2><%= blog.title %></h2>
-                            <p><%= blog.content %></p>
+                            <p id="snippet"><%= blog.content %></p>
+                            </a>
                         </div>
                     <% }); %>
                 <% } else { %>
