@@ -52,7 +52,18 @@ body {
     padding: 2rem;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
+#snippet{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+a{
+    color: black;
+    text-decoration: none;
 
+}
 .button {
     display: inline-block;
     margin-top: 1rem;
