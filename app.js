@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Blog = require('./Models/blog');
+const { result } = require('lodash');
 const dbURL = 'mongodb+srv://Seth:123@learnnode.6ei6e.mongodb.net/BlogWeb?retryWrites=true&w=majority&appName=learnNode';
 const app = express();
 
@@ -29,6 +30,7 @@ app.set('view engine', 'ejs');
 //make "public" folder available
 app.use(express.static('public'));
 app.use(express.static('public/img'));
+app.use(express.urlencoded({extended: true}));
 //log dev mode data
 app.use(morgan('dev'));
 
@@ -48,12 +50,34 @@ app.get('/aboutUs', (req, res) => {
 });
 
 app.get('/createBlog', (req, res) => {
-    res.status(200).render('createBlog');
+    res.status(200).render('createBlog', { title: 'Create Blog' });
 });
+app.post('/viewBlog', (req, res) =>{
+    const blog = new Blog(req.body)
+    blog.save()
+    .then((result) => {
+        res.redirect('/viewBlog');
+    })
+    .catch((err) => {
+        console.log(err);    
+    });
+});
+
 app.get('/viewBlog', (req, res) => {
     Blog.find().sort({createdAt: -1})
     .then((result) => {
         res.status(200).render('viewBlog', {blogs: result});
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+});
+
+app.get('/viewBlog/:id', (req, res) => {
+    const id = req.params.id;
+    Blog.findById(id)
+    .then((result) => {
+        res.render('detailBlog', {blog: result, title: 'Blog Details'});
     })
     .catch((err) => {
         console.log(err);
